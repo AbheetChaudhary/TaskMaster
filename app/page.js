@@ -70,7 +70,7 @@ export default function Home() {
           <AddIcon icon={<IoMdAdd size={36} />} />
         </button>
       </div>
-      <ul className='flex flex-col mt-4 mb-16 gap-4'>
+      <ul className='flex flex-col h-screen mt-4 mb-16 gap-4'>
         {todos.map((todo) => (
           <li
             key={todo.id}
