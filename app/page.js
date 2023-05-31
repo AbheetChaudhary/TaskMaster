@@ -85,7 +85,7 @@ export default function Home() {
               </button>
             </div>
             <div>
-              <hr class='w-full h-1 mx-auto my-2 border-0 rounded md:my-4 dark:bg-gray-700' />
+              <hr class='w-full h-1 mx-auto my-2 border-0 rounded md:my-4 dark:bg-gray-70 bg-gray-700' />
               <p className='font-sans dark:text-gray-300 text-black'>{todo.description}</p>
             </div>
           </li>
