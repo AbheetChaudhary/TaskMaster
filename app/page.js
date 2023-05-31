@@ -1,9 +1,12 @@
 'use client';
 
+import { IoMdAdd } from 'react-icons/io';
+import { MdDelete } from 'react-icons/md';
+
 import React, { useState, useEffect } from 'react';
 
 export default function Home() {
-  const [text, setText] = useState('');
+  const [description, setDescription] = useState('');
   const [task, setTask] = useState('');
   const [todos, setTodos] = useState([]);
 
@@ -16,21 +19,21 @@ export default function Home() {
     setTask(e.target.value);
   };
 
-  const handleTextChange = (e) => {
-    setText(e.target.value);
+  const handleDescriptionChange = (e) => {
+    setDescription(e.target.value);
   };
 
-  const addTodo = (task, text) => {
-    const newTodo = { id: Date.now(), task, text };
+  const addTodo = (task, description) => {
+    const newTodo = { id: Date.now(), task, description };
     const updatedTodos = [...todos, newTodo];
     setTodos(updatedTodos);
     localStorage.setItem('todos', JSON.stringify(updatedTodos));
   };
 
   const handleAddTodo = () => {
-    if (text.trim() !== '' && task.trim() !== '') {
-      addTodo(task, text);
-      setText('');
+    if (description.trim() !== '' && task.trim() !== '') {
+      addTodo(task, description);
+      setDescription('');
       setTask('');
     }
   };
@@ -42,33 +45,63 @@ export default function Home() {
   };
 
   return (
-    <div>
-      <div class='flex px-4 py-2 bg-indigo-800 text-white rounded-xl border-2 border-black'>
-        <input
-          className='text-secondary rounded-xl h-12'
-          type='text'
-          value={task}
-          onChange={handleTaskChange}
-          placeholder='Enter task name...'
-        />
-        <input
-          className='text-black rounded-xl h-12'
-          type='text'
-          value={text}
-          onChange={handleTextChange}
-          placeholder='Enter a new todo...'
-        />
-        <button onClick={handleAddTodo}>Add</button>
+    <div className='w-4/5 mx-auto'>
+      <div class='flex mt-10 px-2 py-2 bg-black rounded-xl gap-4'>
+        <div className='flex flex-col flex-auto'>
+          <input
+            className='text-secondary bg-gray-300 rounded-md h-8 mb-4 p-2'
+            type='text'
+            value={task}
+            onChange={handleTaskChange}
+            placeholder='Enter task name...'
+          />
+          <input
+            className='text-black bg-gray-300 rounded-md h-24 text-left p-2'
+            type='text'
+            value={description}
+            onChange={handleDescriptionChange}
+            placeholder='Enter a new todo...'
+          />
+        </div>
+        <button onClick={handleAddTodo} className='mr-3'>
+          <AddIcon icon={<IoMdAdd size={36} />} />
+        </button>
       </div>
-      <ul>
+      <ul className='flex flex-col mt-4 gap-4'>
         {todos.map((todo) => (
-          <li key={todo.id}>
-            <p>{todo.task}</p>
-            <p>{todo.text}</p>
-            <button onClick={() => deleteTodo(todo.id)}>Delete</button>
+          <li
+            key={todo.id}
+            className='flex flex-col border-2 border-gray-700 rounded-lg p-4'
+          >
+            <div className='flex justify-between'>
+              <p className='font-sans text-3xl font-bold text-gray-300'>
+                {todo.task}
+              </p>
+              <button onClick={() => deleteTodo(todo.id)}>
+                <DeleteIcon icon={<MdDelete size={28} />} />
+              </button>
+            </div>
+            <div>
+              <hr class='w-full h-1 mx-auto my-2 border-0 rounded md:my-4 dark:bg-gray-700' />
+              <p>{todo.description}</p>
+            </div>
           </li>
         ))}
       </ul>
     </div>
   );
 }
+
+const AddIcon = ({ icon, text = 'add task' }) => (
+  <div className='addtask-icon group'>
+    {icon}
+    <span className='addtask-icon-tooltip hover:scale-100'>{text}</span>
+  </div>
+);
+
+const DeleteIcon = ({ icon, text = 'delete task' }) => (
+  <div className='deltask-icon group'>
+    {icon}
+    <span className='deltask-icon-tooltip hover:scale-100'>{text}</span>
+  </div>
+);

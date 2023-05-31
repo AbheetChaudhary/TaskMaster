@@ -25,3 +25,27 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+@layer components {
+  .addtask-icon {
+    @apply relative flex items-center justify-center h-12 w-12 mx-2 my-2
+    shadow-lg bg-gray-300 text-secondary rounded-3xl hover:bg-green-400
+    hover:rounded-xl transition-all duration-300;
+  }
+
+  .addtask-icon-tooltip {
+    @apply absolute w-auto p-2 ml-2 min-w-max left-14 bg-gray-800 text-white
+    rounded-xl scale-0 text-xs font-bold transition-all duration-100;
+  }
+
+  .deltask-icon {
+    @apply relative flex items-center justify-center h-10 w-10
+    shadow-lg bg-gray-300 text-secondary rounded-3xl hover:bg-red-500
+    hover:rounded-xl transition-all duration-300;
+  }
+
+  .deltask-icon-tooltip {
+    @apply absolute w-auto p-2 ml-2 min-w-max left-14 bg-gray-800 text-white
+    rounded-xl scale-0 text-xs font-bold transition-all duration-100;
+  }
+}
