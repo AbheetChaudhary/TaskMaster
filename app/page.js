@@ -61,8 +61,8 @@ export default function Home() {
   };
 
   return (
-    <div className='w-4/5 mx-auto'>
-        <div class='flex mt-10 px-2 py-2 bg-black rounded-xl gap-4'>
+    <div className='w-5/6 mx-auto'>
+      <div class='flex mt-10 px-2 py-2 bg-black rounded-xl gap-4'>
         <div className='flex flex-col flex-auto'>
           <input
             className='text-secondary bg-gray-300 rounded-md h-8 mb-4 p-2'
@@ -86,17 +86,21 @@ export default function Home() {
         {todos.map((todo) => (
           <li
             key={todo.id}
-            className='flex flex-col border-2 border-gray-700 rounded-lg p-4'
+            className={`flex flex-col border-2 border-gray-700 rounded-lg p-4 ${
+              todo.done ? 'line-through' : ''
+            }`}
           >
             <div className='flex justify-between'>
               <p className='font-sans text-3xl font-bold text-gray-300'>
                 {todo.task}
               </p>
               <div className='flex gap-2'>
-                <button
-                  onClick={() => toggleTodo(todo.id)}
-                >
-                  {todo.done ? <DoneIcon icon={<MdDone size={32} /> } /> : <PendingIcon icon={<MdDone size={32} />} />}
+                <button onClick={() => toggleTodo(todo.id)}>
+                  {todo.done ? (
+                    <DoneIcon icon={<MdDone size={32} />} />
+                  ) : (
+                    <PendingIcon icon={<MdDone size={32} />} />
+                  )}
                 </button>
                 <button onClick={() => deleteTodo(todo.id)}>
                   <DeleteIcon icon={<MdDelete size={28} />} />
@@ -105,9 +109,7 @@ export default function Home() {
             </div>
             <div>
               <hr class='w-full h-1 mx-auto my-2 border-0 rounded md:my-4 bg-gray-700' />
-              <p className='font-sans text-gray-300'>
-                {todo.description}
-              </p>
+              <p className='font-sans text-gray-300'>{todo.description}</p>
             </div>
           </li>
         ))}
