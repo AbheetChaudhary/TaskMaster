@@ -26,7 +26,7 @@ export default function Home() {
 
   const addTodo = (task, description) => {
     const newTodo = { id: Date.now(), task, description, done: false };
-    const updatedTodos = [...todos, newTodo];
+    const updatedTodos = [newTodo, ...todos];
     setTodos(updatedTodos);
     localStorage.setItem('todos', JSON.stringify(updatedTodos));
   };
