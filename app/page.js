@@ -77,7 +77,7 @@ export default function Home() {
             className='flex flex-col border-2 border-gray-700 rounded-lg p-4'
           >
             <div className='flex justify-between'>
-              <p className='font-sans text-3xl font-bold text-gray-300'>
+              <p className='font-sans text-3xl font-bold dark:text-gray-300 text-black'>
                 {todo.task}
               </p>
               <button onClick={() => deleteTodo(todo.id)}>
@@ -86,7 +86,7 @@ export default function Home() {
             </div>
             <div>
               <hr class='w-full h-1 mx-auto my-2 border-0 rounded md:my-4 dark:bg-gray-700' />
-              <p className='font-sans'>{todo.description}</p>
+              <p className='font-sans dark:text-gray-300 text-black'>{todo.description}</p>
             </div>
           </li>
         ))}
