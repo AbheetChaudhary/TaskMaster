@@ -35,6 +35,10 @@ export default function Home() {
       addTodo(task, description);
       setDescription('');
       setTask('');
+    } else if (task.trim() !== '') {
+      addTodo(task, ';)');
+      setDescription('');
+      setTask('');
     }
   };
 
@@ -53,21 +57,20 @@ export default function Home() {
             type='text'
             value={task}
             onChange={handleTaskChange}
-            placeholder='Enter task name...'
+            placeholder='Enter task...'
           />
-          <input
+          <textarea
             className='text-black bg-gray-300 rounded-md h-24 text-left p-2'
-            type='text'
             value={description}
             onChange={handleDescriptionChange}
-            placeholder='Enter a new todo...'
+            placeholder='Enter optional description...'
           />
         </div>
         <button onClick={handleAddTodo} className='mr-3'>
           <AddIcon icon={<IoMdAdd size={36} />} />
         </button>
       </div>
-      <ul className='flex flex-col mt-4 gap-4'>
+      <ul className='flex flex-col mt-4 mb-16 gap-4'>
         {todos.map((todo) => (
           <li
             key={todo.id}
@@ -83,7 +86,7 @@ export default function Home() {
             </div>
             <div>
               <hr class='w-full h-1 mx-auto my-2 border-0 rounded md:my-4 dark:bg-gray-700' />
-              <p>{todo.description}</p>
+              <p className='font-sans'>{todo.description}</p>
             </div>
           </li>
         ))}
