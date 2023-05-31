@@ -2,6 +2,7 @@
 
 import { IoMdAdd } from 'react-icons/io';
 import { MdDelete } from 'react-icons/md';
+import { MdDone } from 'react-icons/md';
 
 import React, { useState, useEffect } from 'react';
 
@@ -24,7 +25,7 @@ export default function Home() {
   };
 
   const addTodo = (task, description) => {
-    const newTodo = { id: Date.now(), task, description };
+    const newTodo = { id: Date.now(), task, description, done: false };
     const updatedTodos = [...todos, newTodo];
     setTodos(updatedTodos);
     localStorage.setItem('todos', JSON.stringify(updatedTodos));
@@ -48,9 +49,20 @@ export default function Home() {
     localStorage.setItem('todos', JSON.stringify(updatedTodos));
   };
 
+  const toggleTodo = (id) => {
+    const updatedTodos = todos.map((todo) => {
+      if (todo.id === id) {
+        return { ...todo, done: !todo.done };
+      }
+      return todo;
+    });
+    setTodos(updatedTodos);
+    localStorage.setItem('todos', JSON.stringify(updatedTodos));
+  };
+
   return (
     <div className='w-4/5 mx-auto'>
-      <div class='flex mt-10 px-2 py-2 bg-black rounded-xl gap-4'>
+        <div class='flex mt-10 px-2 py-2 bg-black rounded-xl gap-4'>
         <div className='flex flex-col flex-auto'>
           <input
             className='text-secondary bg-gray-300 rounded-md h-8 mb-4 p-2'
@@ -77,16 +89,25 @@ export default function Home() {
             className='flex flex-col border-2 border-gray-700 rounded-lg p-4'
           >
             <div className='flex justify-between'>
-              <p className='font-sans text-3xl font-bold dark:text-gray-300 text-black'>
+              <p className='font-sans text-3xl font-bold text-gray-300'>
                 {todo.task}
               </p>
-              <button onClick={() => deleteTodo(todo.id)}>
-                <DeleteIcon icon={<MdDelete size={28} />} />
-              </button>
+              <div className='flex gap-2'>
+                <button
+                  onClick={() => toggleTodo(todo.id)}
+                >
+                  {todo.done ? <DoneIcon icon={<MdDone size={32} /> } /> : <PendingIcon icon={<MdDone size={32} />} />}
+                </button>
+                <button onClick={() => deleteTodo(todo.id)}>
+                  <DeleteIcon icon={<MdDelete size={28} />} />
+                </button>
+              </div>
             </div>
             <div>
-              <hr class='w-full h-1 mx-auto my-2 border-0 rounded md:my-4 dark:bg-gray-70 bg-gray-700' />
-              <p className='font-sans dark:text-gray-300 text-black'>{todo.description}</p>
+              <hr class='w-full h-1 mx-auto my-2 border-0 rounded md:my-4 bg-gray-700' />
+              <p className='font-sans text-gray-300'>
+                {todo.description}
+              </p>
             </div>
           </li>
         ))}
@@ -106,5 +127,19 @@ const DeleteIcon = ({ icon, text = 'delete task' }) => (
   <div className='deltask-icon group'>
     {icon}
     <span className='deltask-icon-tooltip hover:scale-100'>{text}</span>
+  </div>
+);
+
+const PendingIcon = ({ icon, text = 'mark as done' }) => (
+  <div className='pending-task-icon group'>
+    {icon}
+    <span className='pending-task-icon-tooltip hover:scale-100'>{text}</span>
+  </div>
+);
+
+const DoneIcon = ({ icon, text = 'mark as incomplete' }) => (
+  <div className='task-done-icon group'>
+    {icon}
+    <span className='task-done-icon-tooltip hover:scale-100'>{text}</span>
   </div>
 );
